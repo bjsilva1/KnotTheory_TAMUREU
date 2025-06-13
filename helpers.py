@@ -1,7 +1,7 @@
 import csv
 import snappy
 from snappy import *
-from .alexander_poly import alexander_presentation, alexander_nullity, alexander_polynomial
+from alexander_poly import alexander_presentation, alexander_nullity, alexander_polynomial
 
 def sig_zero(L):
     return (L.signature() == 0)
@@ -208,3 +208,18 @@ def is_SplitPoly(poly1):
             return False
     # If all factors cancel
     return True
+
+def nullity(L):
+    A = L.seifert_matrix()
+    M = A + A.transpose()
+    return M.nullity()
+
+def jones_nullity(L):
+    jones_L = L.jones_polynomial()
+    q = jones_L.parent().gen()
+    jones_unknot = (q + q**(-1))
+    output = 0
+    while jones_unknot.divides(jones_L):
+        output += 1
+        jones_L = jones_L / jones_unknot
+    return output
