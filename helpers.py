@@ -221,5 +221,5 @@ def jones_nullity(L):
     output = 0
     while jones_unknot.divides(jones_L):
         output += 1
-        jones_L = jones_L / jones_unknot
+        jones_unknot = jones_unknot * (q + q**(-1))
     return output
