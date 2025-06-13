@@ -15,16 +15,16 @@ def linking_matrix_zero(L):
                 output = False
     return output
 
+def alexander_info(L):
+    M = alexander_presentation(L)
+    beta = alexander_nullity(M)
+    a_poly = alexander_polynomial(M, beta)
+    return (beta, a_poly)
+
 def fox_milnor(L):
     n = len(L.link_components)
-    # Check Alexander nullity
-    M = alexander_presentation(L)
-    if alexander_nullity(M) != n - 1:
-        return (False, False)
-
-    # Check polynomial condition TODO
-    a_poly = alexander_polynomial(M, n - 1)
-    return (True, is_SplitPoly(a_poly))
+    beta, a_poly = alexander_info(L)
+    return (n - beta == 1, is_SplitPoly(a_poly))
 
 #helper function for eisermann
 def signed_determinant(K):
